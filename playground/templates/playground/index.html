@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="{% url 'playground:join' %}" method="POST">
+        {% csrf_token %}
+        <input id="inputId" type="text" name="room">
+        <button type="submit" class="formbutton">Join</button>
+    </form>
+    <form action="{% url 'playground:create' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="formbutton">create</button>
+    </form>
+    <script>
+    var aidi = document.getElementById('inputId').value 
+    </script>
+</body>
+</html>

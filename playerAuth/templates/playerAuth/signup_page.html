@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="{% url 'playerAuth:signup' %}" method="POST" class="test mid" style="color:white">
+        {% csrf_token %}
+        <div class="unknown"><p>Username</p>{{ form.username }}</div>
+        <div class="unknown"><p>Password</p>{{ form.password1 }}</div>
+        <div class="unknown"><p>Password</p>{{ form.password2 }}</div>
+        <button type="submit" class="formbutton">Signup</button>
+    </form>
+</body>
+</html>
