@@ -9,3 +9,4 @@ whitenoise==3.3.1
 psycopg2-binary==2.7.5
 oauth2client
 django-heroku
+daphne
