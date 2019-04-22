@@ -25,7 +25,7 @@ SECRET_KEY = 'j@=&uz3m-@k56%w@t3#ik4^+_tsi2)(er91a*nduxkcum#rjo='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['battleshipleo.herokuapp.com']
 
 
 # Application definition
