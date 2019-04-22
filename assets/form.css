@@ -1,0 +1,78 @@
+body{
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    display: flex;
+    background-image:url("Bg.svg");
+    background-repeat: no-repeat;
+    background-attachment: scroll; 
+    background-size: cover;
+    background-blend-mode: multiply;
+    margin: 0px;
+    
+}
+
+.form-input p{
+    margin: 0;
+    width: 100%
+}
+
+.mid{
+    text-align: center;
+}
+
+.forms{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.form-input{
+    width: 90%;
+    margin: 10px 0;
+}
+
+.form-input input{
+    height: 30px;
+    width: 90%;
+    border: 0;
+    border-radius: 15px;
+    text-decoration: none;
+    padding: 0 10px;
+    background-color: white;
+}
+
+.form-container{
+    background-image: linear-gradient(rgb(36, 146, 224) 0%,rgb(19, 19, 129) 20%);
+    margin: 20px;
+    width: 60vw;
+    padding: 20px 0;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container h2{
+    width: 90%;
+    margin: 0 0 20px 0;
+}
+
+.formbutton{
+    width: 30%;
+    height: 30px;
+    border: 0;
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: rgb(199, 180, 11);
+}
+
+.form-input a:visited, .form-input a{
+    color: white;
+}

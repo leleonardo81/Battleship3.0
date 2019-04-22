@@ -1,0 +1,116 @@
+body{
+    background-image:url("Bg.svg");
+    background-repeat: no-repeat;
+    background-attachment: scroll; 
+    background-size: cover;
+    background-blend-mode: multiply;
+    margin: 0px;
+    font-family: 'Exo 2', sans-serif;
+    min-height: 100vh;
+}
+
+.warzone-table{
+    background-color: rgb(59, 59, 255);
+}
+
+.warzone-button{
+    width: 40px;
+    height: 40px;
+    border: 0;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: rgb(112, 160, 228);
+}
+
+.warzone-button:active{
+    background-color: rgb(230, 91, 11);
+}
+
+.enemy{
+    margin: 10px;
+    padding: 10px;
+    background-color: rgb(59, 59, 255);
+    border-radius: 15px;
+}
+
+#useful{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#room-name{
+    width:100%;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+#player-info{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: aqua;
+    padding: 20px 20px 30px 20px;
+    border-radius: 50px;
+    margin: 10px 30px 30px 30px
+}
+
+.vertical-flex-container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 150px;
+    align-content: center;
+    margin: 5px 5px;
+}
+
+.buttons{
+    border: 0;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: white;
+    height: 30px;
+    width: 100px;
+    margin: 15px 0;
+    font-family: 'Exo 2', sans-serif;
+}
+
+.bold{
+    font-size: 1.2em;
+}
+
+.pickplayer{
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    display: none;
+}
+
+.pickplayer input {
+    margin: 8px 1vw;
+}
+
+@media screen and (max-width: 700px) {
+    .warzone-button{
+        width: 8vw;
+        height: 8vw;
+        border-radius: 2vw
+    }
+
+    .hide{
+        display: none;
+    }
+
+    .pickplayer{
+        display: flex;
+    }
+
+}
+
+@media screen and (max-width: 700px) {
+    .buttons {
+        margin: 8px 0;
+    }
+}

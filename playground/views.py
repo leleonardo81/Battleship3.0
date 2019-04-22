@@ -48,13 +48,19 @@ def join(request):
             elif now_room.game_start:
                 return redirect('playground:index')
             else:
-                User.set_room(room_id)
-                User.save()
-                Warzone.objects.create(
-                    player = User,
-                    room = room_id,
-                )
-                return redirect('playground:room', room_id=room_id)
+                try:
+                    Warzone.objects.get(player=User, room=room_id)
+                    User.set_room(room_id)
+                    User.save()
+                    return redirect('playground:room', room_id=room_id)
+                except ObjectDoesNotExist:
+                    User.set_room(room_id)
+                    User.save()
+                    Warzone.objects.create(
+                        player = User,
+                        room = room_id,
+                    )
+                    return redirect('playground:room', room_id=room_id)
         except ObjectDoesNotExist:
             return redirect('playground:index')
     User = Player.objects.get(user=request.user)

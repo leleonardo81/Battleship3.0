@@ -20,6 +20,7 @@ class Room(models.Model):
         self.game_start = True
 
     def finish(self):
+        self.turn = 0
         self.game_finished = True
     
     def reset(self):
@@ -36,7 +37,7 @@ class Warzone(models.Model):
     ship2 = models.CharField(max_length=12, blank=True, null=True)
     ship3 = models.CharField(max_length=9, blank=True, null=True)
     ship4 = models.CharField(max_length=6, blank=True, null=True)
-    shooted = models.CharField(max_length=250, blank=True, null=True, default="")
+    shooted = models.CharField(max_length=250, default="")
 
     def setShip(self, ship_data):
         self.ship1 = ship_data['ship1']

@@ -1,30 +1,44 @@
+{% load static from staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>Game Room</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BattleShip</title>
+    <link rel="stylesheet" href="{% static 'room.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Exo+2:600" rel="stylesheet"> 
 </head>
 <body>
-    <div id="players"></div>
+    <div id="player-info">
+        <h1 id="room-name"></h1>
+        <div id="players"></div>
+        <div class="vertical-flex-container" id='start-ready-container'>
+            <input type='button' class='buttons' id='start-button' value='START' />
+            <input type='button' class='buttons' id='ready-button' value='READY' />
+        </div>
+        <div id="mywarzone"></div>
+        <div id="select-ship-container" class="vertical-flex-container">
+            <button id="sel1" class='buttons' onclick="setShip(1)">SHIP 1</button>
+            <button id="sel2" class='buttons' onclick="setShip(2)">SHIP 2</button>
+            <button id="sel3" class='buttons' onclick="setShip(3)">SHIP 3</button>
+            <button id="sel4" class='buttons' onclick="setShip(4)">SHIP 4</button>
+        </div>
+    </div>
+    <div id="useful"></div>
     <!--<textarea id="chat-log" cols="100" rows="20"></textarea><br/>
     <input id="chat-message-input" type="text" size="100"/><br/>
     <input id="chat-message-submit" type="button" value="Send"/>-->
-    <input type='button' id='start-button' value='START' />
-    <div id="useful"></div>
-    <input type='button' id='ready-button' value='READY' />
-    <div id="mywarzone"></div>
-    <button onclick="setShip(1)">SHIP 1</button>
-    <button onclick="setShip(2)">SHIP 2</button>
-    <button onclick="setShip(3)">SHIP 3</button>
-    <button onclick="setShip(4)">SHIP 4</button>
 </body>
 <script>
+    var selectEnemy;
     var nowTurn;
-    var myship1 = "{{ my_ship1 }}";
-    var myship2 = "{{ my_ship2 }}";
-    var myship3 = "{{ my_ship3 }}";
-    var myship4 = "{{ my_ship4 }}";
-    selectShip = 1;
+    var myship1 = ("{{my_ship1}}"=="undefined") ? {{ my_ship1 }} : "{{my_ship1}}";
+    var myship2 = ("{{my_ship2}}"=="undefined") ? {{ my_ship2 }} : "{{my_ship2}}";
+    var myship3 = ("{{my_ship3}}"=="undefined") ? {{ my_ship3 }} : "{{my_ship3}}";
+    var myship4 = ("{{my_ship4}}"=="undefined") ? {{ my_ship4 }} : "{{my_ship4}}";
+    var selectShip;
+    setShip(1);
     var gameStatus;
     var roomID = {{ room_id_json }};
     var gameSocket = new WebSocket(
@@ -54,6 +68,7 @@
                 break;
             case 'finished':
                 loadEnemyWarzone(data);
+                hideStartButton(data);
         }
     };
 
@@ -78,8 +93,7 @@
     function loadplayers(data){
         var players = data['players'];
         var mark = data['players_mark'];
-        console.log(mark)
-        document.getElementById('players').innerHTML = "";
+        document.getElementById('players').innerHTML = "<span class='bold'>Players in Room:</span></br>";
         for(i=0;i<players.length;i++){
             document.getElementById('players').innerHTML += (players[i]['name']+markplayers(data['state'],mark[i])+"<br/>");
             }
@@ -88,30 +102,51 @@
     function hideStartButton(data){
         document.getElementById('start-button').style.display="none";
         document.getElementById('ready-button').style.display="none";
+        document.getElementById('select-ship-container').style.display="none";
     }
 
     function setShip(id){
         selectShip = id;
+        document.getElementById('sel1').style.backgroundColor='white';
+        document.getElementById('sel2').style.backgroundColor='white';
+        document.getElementById('sel3').style.backgroundColor='white';
+        document.getElementById('sel4').style.backgroundColor='white';
+        document.getElementById('sel'+id).style.backgroundColor='grey';
     }
 
     function renderColor(ship, name, color){
         shipid = [];
-        num = ship.substr(1)%100;
         switch(ship){
-            case(myship1):
-                shiplen=5; break;
-            case(myship2):
-                shiplen=4; break;
-            case(myship3):
-                shiplen=3; break;
-            case(myship4):
-                shiplen=2; break;
+            case('myship1'):
+                if(myship1==null){;return 0;}
+                shiplen=5;
+                num = myship1.substr(1)%100; 
+                shipQ = myship1;
+                break;
+            case('myship2'):
+                if(myship2==null){;return 0;}
+                shiplen=4; 
+                num = myship2.substr(1)%100; 
+                shipQ = myship2;
+                break;
+            case('myship3'):
+                if(myship3==null){;return 0;}
+                shiplen=3; 
+                num = myship3.substr(1)%100; 
+                shipQ = myship3;
+                break;
+            case('myship4'):
+                if(myship4==null){;return 0;}
+                shiplen=2; 
+                num = myship4.substr(1)%100;
+                shipQ = myship4;
+                break;
         }
-        if (ship[0]=='v'){
+        if (shipQ[0]=='v'){
             for(i=0; i<shiplen; i++){
                 shipid.push(num+i*7);
             }
-        } else if (ship[0]=='h') {
+        } else if (shipQ[0]=='h') {
             for(i=0; i<shiplen; i++){
                 shipid.push(num+i);
             }
@@ -129,7 +164,7 @@
         if (gameStatus == 'preparation'){
             switch(selectShip){
                 case 1:
-                    if(myship1=="undefined" && num<=21){
+                    if(myship1==null && num<=21){
                         myship1 = "v"+num;
                     } else if (num==myship1.substr(1)){
                         if (myship1[0]=='v' && 0<num%7 && num%7<=3) {
@@ -145,7 +180,7 @@
                     }
                     break;
                 case 2:
-                    if(myship2=="undefined" && num<=28){
+                    if(myship2==null && num<=28){
                         myship2 = "v"+num;
                     } else if (num==myship2.substr(1)){
                         if (myship2[0]=='v' && 0<num%7 && num%7<=4) {
@@ -161,7 +196,7 @@
                     }
                     break;
                 case 3:
-                    if(myship3=="undefined" && num<=35){
+                    if(myship3==null && num<=35){
                         myship3 = "v"+num;
                     } else if (num==myship3.substr(1)){
                         if (myship3[0]=='v' && 0<num%7 && num%7<=5) {
@@ -177,7 +212,7 @@
                     }
                     break;
                 case 4:
-                if(myship4=="undefined" && num<=42){
+                if(myship4==null && num<=42){
                         myship4 = "v"+num;
                     } else if (num==myship4.substr(1)){
                         if (myship4[0]=='v' && 0<num%7 && num%7<=6) {
@@ -196,10 +231,10 @@
             for(i=1; i<=49; i++){
                 document.getElementById('me-'+i).style.backgroundColor='';
             }
-            renderColor(myship1,'me','red');
-            renderColor(myship2,'me','blue');
-            renderColor(myship3,'me','yellow');
-            renderColor(myship4,'me','green');
+            renderColor('myship1','me','red');
+            renderColor('myship2','me','blue');
+            renderColor('myship3','me','yellow');
+            renderColor('myship4','me','green');
         }
     }
 
@@ -211,11 +246,11 @@
                 x+="<tr>";
                 for(j=1;j<=7;j++){
                     var iD = j+(i-1)*7;
-                    x+="<td><input onclick=pick(id) value="+iD+" id="+owner+"-"+iD+" type='button'/></td>";
+                    x+="<td><input class='warzone-button' onclick=pick(id) id="+owner+"-"+iD+" type='button'/></td>";
                 }
                 x+="</tr>";
             }
-            document.querySelector('#mywarzone').innerHTML = "<table>"+x+"</table>";
+            document.querySelector('#mywarzone').innerHTML = "<table class='warzone-table'>"+x+"</table>";
         } else if(gameStatus == undefined){
             document.querySelector('#mywarzone').innerHTML = "Loading Data....";
         } else {
@@ -224,39 +259,45 @@
                 x+="<tr>";
                 for(j=1;j<=7;j++){
                     var iD = j+(i-1)*7;
-                    x+="<td><input value="+iD+" id="+owner+"-"+iD+" type='button'/></td>";
+                    x+="<td><input class='warzone-button' id="+owner+"-"+iD+" type='button'/></td>";
                 }
                 x+="</tr>";
             }
-            document.querySelector('#mywarzone').innerHTML = "<table>"+x+"</table>";
+            document.querySelector('#mywarzone').innerHTML = "<table class='warzone-table'>"+x+"</table>";
         }
-        renderColor(myship1,owner,'red');
-        renderColor(myship2,owner,'blue');
-        renderColor(myship3,owner,'yellow');
-        renderColor(myship4,owner,'green');
+        renderColor('myship1',owner,'red');
+        renderColor('myship2',owner,'blue');
+        renderColor('myship3',owner,'yellow');
+        renderColor('myship4',owner,'green');
     }
 
     function loadEnemyWarzone(data){
         players = data['players'];
         document.getElementById('useful').innerHTML="";
+        var first = true;
         var x="";
+        var y="";
         for (p=0; p<players.length; p++){
-            x+="<table>";
             if(players[p]['name']!="{{request.user}}"){
+                if (first){var initial = players[p]['name']}
+                x+="<div id='"+players[p]['name']+"' class='enemy'><p>"+players[p]['name']+"</p><table class='warzone-table'>";
+                first = false;
                 for(i=0; i<7; i++){
                     x+="<tr>";
                     for(j=1; j<=7; j++){
-                        nom = players[p]['warzone_id'];
                         now_num = j+i*7
-                        x+="<td><input onclick=attack(id) value="+now_num+" id="+players[p]['name']+"-"+now_num+" type='button'/></td>";
+                        x+="<td><input class='warzone-button' onclick=attack(id) id="+players[p]['name']+"-"+now_num+" type='button'/></td>";
                     }
                     x+="</tr>";
                 }
+                x+="</table></div>";
+                y+="<input onclick=appear(value) class='buttons plhide' id='"+players[p]['name']+"-button' type='button' value="+players[p]['name']+" />"
             }
-            x+="</table>";
         }
-        document.getElementById('useful').innerHTML = x;
+        document.getElementById('useful').innerHTML = "<div class='pickplayer'>"+y+"</div>"+x;
         colorizeEnemy(data);
+        if(selectEnemy==undefined){appear(initial)}
+        else{appear(selectEnemy)}
     }
 
     function colorizeEnemy(data){
@@ -268,20 +309,41 @@
                         now_num = j+i*7
                         if(players[p]['shooted'].find((e)=>e==now_num)!=undefined){
                             document.getElementById(players[p]['name']+'-'+now_num).disabled = true;
-                            document.getElementById(players[p]['name']+'-'+now_num).style.backgroundColor='grey';
+                            document.getElementById(players[p]['name']+'-'+now_num).style.backgroundColor='rgb(59, 59, 255)';
                             if((players[p]['sh1_shooted'].find((e)=>e==now_num)!=undefined)||
                                 (players[p]['sh2_shooted'].find((e)=>e==now_num)!=undefined)||
                                 (players[p]['sh3_shooted'].find((e)=>e==now_num)!=undefined)||
                                 (players[p]['sh4_shooted'].find((e)=>e==now_num)!=undefined)){
-                                    document.getElementById(players[p]['name']+'-'+now_num).style.backgroundColor='black';}
+                                document.getElementById(players[p]['name']+'-'+now_num).style.backgroundImage='radial-gradient(red,rgb(112, 160, 228))';}
                             if(players[p]['sh1_shooted'].length==5 && players[p]['sh1_shooted'].find((e)=>e==now_num)!=undefined){
+                                document.getElementById(players[p]['name']+'-'+now_num).style.backgroundImage='';
                                 document.getElementById(players[p]['name']+'-'+now_num).style.backgroundColor='red';}
                             if(players[p]['sh2_shooted'].length==4 && players[p]['sh2_shooted'].find((e)=>e==now_num)!=undefined){
+                                document.getElementById(players[p]['name']+'-'+now_num).style.backgroundImage='';
                                 document.getElementById(players[p]['name']+'-'+now_num).style.backgroundColor='blue';}
                             if(players[p]['sh3_shooted'].length==3 && players[p]['sh3_shooted'].find((e)=>e==now_num)!=undefined){
+                                document.getElementById(players[p]['name']+'-'+now_num).style.backgroundImage='';
                                 document.getElementById(players[p]['name']+'-'+now_num).style.backgroundColor='yellow';}
                             if(players[p]['sh4_shooted'].length==2 && players[p]['sh4_shooted'].find((e)=>e==now_num)!=undefined){
+                                document.getElementById(players[p]['name']+'-'+now_num).style.backgroundImage='';
                                 document.getElementById(players[p]['name']+'-'+now_num).style.backgroundColor='green';}
+                        }
+                    }
+                }
+            } else {
+                for(i=0; i<7; i++){
+                    for(j=1; j<=7; j++){
+                        now_num = j+i*7
+                        if(players[p]['shooted'].find((e)=>e==now_num)!=undefined){
+                            document.getElementById('me-'+now_num).style.backgroundColor='grey';
+                            if(players[p]['sh1_shooted'].find((e)=>e==now_num)!=undefined){
+                                document.getElementById('me-'+now_num).style.backgroundColor='rgb(248, 113, 113)';}
+                            if(players[p]['sh2_shooted'].find((e)=>e==now_num)!=undefined){
+                            document.getElementById('me-'+now_num).style.backgroundColor='rgb(131, 145, 187)';}
+                            if(players[p]['sh3_shooted'].find((e)=>e==now_num)!=undefined){
+                                document.getElementById('me-'+now_num).style.backgroundColor='rgb(181, 187, 131)';}
+                            if(players[p]['sh4_shooted'].find((e)=>e==now_num)!=undefined){
+                            document.getElementById('me-'+now_num).style.backgroundColor='rgb(125, 236, 138)';}    
                         }
                     }
                 }
@@ -304,8 +366,21 @@
         return x;
     }
 
+    function appear(val){
+        selectEnemy = val;
+        var queries = document.querySelectorAll('.enemy');
+        for(i=0;i<queries.length;i++){
+            queries[i].className = 'enemy hide';
+        }
+        var buttonqueries = document.querySelectorAll('.plhide');
+        for(i=0;i<buttonqueries.length;i++){
+            buttonqueries[i].style.backgroundColor = 'white';
+        }
+        document.getElementById(val).className = 'enemy';
+        document.getElementById(val+'-button').style.backgroundColor = 'grey';
+    }
+
     function attack(id){
-        console.log(id);
         if (nowTurn == "{{request.user}}"){
         gameSocket.send(JSON.stringify({
             'command': 'attack',
@@ -316,6 +391,8 @@
             console.log('not your turn yet')
         }
     }
+
+    document.querySelector('#room-name').innerHTML = "Room : "+roomID;
 
     document.querySelector('#start-button').onclick = function(e) {
         gameSocket.send(JSON.stringify({
@@ -337,9 +414,6 @@
             alert('diisi dulu');
         }
     };
-
-    
-
     
     /*document.querySelector('#chat-message-input').focus();
     document.querySelector('#chat-message-input').onkeyup = function(e) {

@@ -60,7 +60,9 @@ class ChatConsumer(WebsocketConsumer):
         sh2_shooted = []
         sh3_shooted = []
         sh4_shooted = []
-        if p_warzone.shooted != "":
+        shooted = []
+        if p_warzone.shooted != None:
+            shooted = p_warzone.shooted.split('-')
             for m in p_warzone.shooted.split("-"):
                 if m in p_warzone.ship1.split('-'):
                     sh1_shooted.append(m)
@@ -73,12 +75,11 @@ class ChatConsumer(WebsocketConsumer):
             
         return {
             'name':player.user.username,
-            'shooted': p_warzone.shooted.split('-'),
+            'shooted': shooted,
             'sh1_shooted': sh1_shooted,
             'sh2_shooted': sh2_shooted,
             'sh3_shooted': sh3_shooted,
-            'sh4_shooted': sh4_shooted,
-            'warzone_id': p_warzone.id,}
+            'sh4_shooted': sh4_shooted,}
 
     def check_winner(self, room):
         players = Player.objects.filter(room=room)

@@ -1,23 +1,32 @@
+{% load static from staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'form.css' %}">
+    <title>BattleShip</title>
 </head>
 <body>
-    <form action="{% url 'playground:join' %}" method="POST">
-        {% csrf_token %}
-        <input id="inputId" type="text" name="room">
-        <button type="submit" class="formbutton">Join</button>
-    </form>
-    <form action="{% url 'playground:create' %}" method="POST">
-        {% csrf_token %}
-        <button type="submit" class="formbutton">create</button>
-    </form>
+    <div class="form-container">
+        <form action="{% url 'playground:join' %}" method="POST" class="forms">
+            {% csrf_token %}
+            <div class="form-input">
+                <p>Enter Room ID</p>
+                <input id="inputId" class='mid' type="text" name="room" required>
+            </div>
+            <button type="submit" class="formbutton">Join</button>
+        </form>
+    <br/>
+        <form action="{% url 'playground:create' %}" method="POST" class="forms">
+            {% csrf_token %}
+            <h4>Create New Room :</h4>
+            <button type="submit" class="formbutton">create</button>
+        </form>
+    </div>
     <script>
-    var aidi = document.getElementById('inputId').value 
+        var aidi = document.getElementById('inputId').value 
     </script>
 </body>
 </html>
