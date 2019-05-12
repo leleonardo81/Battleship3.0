@@ -1,5 +1,5 @@
 aioredis==1.2.0
-asgi-redis=1.*
+asgi-redis==1.*
 asgiref==2.3.2
 django-cors-headers==2.4.0
 channels==2.1.5
