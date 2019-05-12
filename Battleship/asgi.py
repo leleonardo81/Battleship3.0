@@ -1,6 +1,6 @@
 import os
 # import django
-import channels.asgi
+import channels
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Battleship.settings")
 # django.setup()
