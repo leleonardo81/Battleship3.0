@@ -232,7 +232,7 @@
                 document.getElementById('me-'+i).style.backgroundColor='';
             }
             renderColor('myship1','me','red');
-            renderColor('myship2','me','blue');
+            renderColor('myship2','me','orange');
             renderColor('myship3','me','yellow');
             renderColor('myship4','me','green');
         }
@@ -266,7 +266,7 @@
             document.querySelector('#mywarzone').innerHTML = "<table class='warzone-table'>"+x+"</table>";
         }
         renderColor('myship1',owner,'red');
-        renderColor('myship2',owner,'blue');
+        renderColor('myship2',owner,'orange');
         renderColor('myship3',owner,'yellow');
         renderColor('myship4',owner,'green');
     }
@@ -320,7 +320,7 @@
                                 document.getElementById(players[p]['name']+'-'+now_num).style.backgroundColor='red';}
                             if(players[p]['sh2_shooted'].length==4 && players[p]['sh2_shooted'].find((e)=>e==now_num)!=undefined){
                                 document.getElementById(players[p]['name']+'-'+now_num).style.backgroundImage='';
-                                document.getElementById(players[p]['name']+'-'+now_num).style.backgroundColor='blue';}
+                                document.getElementById(players[p]['name']+'-'+now_num).style.backgroundColor='orange';}
                             if(players[p]['sh3_shooted'].length==3 && players[p]['sh3_shooted'].find((e)=>e==now_num)!=undefined){
                                 document.getElementById(players[p]['name']+'-'+now_num).style.backgroundImage='';
                                 document.getElementById(players[p]['name']+'-'+now_num).style.backgroundColor='yellow';}
@@ -335,15 +335,15 @@
                     for(j=1; j<=7; j++){
                         now_num = j+i*7
                         if(players[p]['shooted'].find((e)=>e==now_num)!=undefined){
-                            document.getElementById('me-'+now_num).style.backgroundColor='grey';
+                            document.getElementById('me-'+now_num).style.backgroundColor='rgb(100, 100, 100)';
                             if(players[p]['sh1_shooted'].find((e)=>e==now_num)!=undefined){
-                                document.getElementById('me-'+now_num).style.backgroundColor='rgb(248, 113, 113)';}
+                                document.getElementById('me-'+now_num).style.backgroundColor='rgb(200, 108, 108)';}
                             if(players[p]['sh2_shooted'].find((e)=>e==now_num)!=undefined){
-                            document.getElementById('me-'+now_num).style.backgroundColor='rgb(131, 145, 187)';}
+                            document.getElementById('me-'+now_num).style.backgroundColor='rgb(194, 168, 114)';}
                             if(players[p]['sh3_shooted'].find((e)=>e==now_num)!=undefined){
                                 document.getElementById('me-'+now_num).style.backgroundColor='rgb(181, 187, 131)';}
                             if(players[p]['sh4_shooted'].find((e)=>e==now_num)!=undefined){
-                            document.getElementById('me-'+now_num).style.backgroundColor='rgb(125, 236, 138)';}    
+                            document.getElementById('me-'+now_num).style.backgroundColor='rgb(116, 177, 122)';}    
                         }
                     }
                 }

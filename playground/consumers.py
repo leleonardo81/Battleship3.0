@@ -44,6 +44,15 @@ class ChatConsumer(WebsocketConsumer):
                 return 0
         room.finish()
         room.save()
+
+    def check_hit(self, warzone, zone_id):
+        ships = warzone.ship1.split('-')
+        ships += warzone.ship2.split('-')
+        ships += warzone.ship3.split('-')
+        ships += warzone.ship4.split('-')
+        if (str(zone_id) in ships):
+            return True
+        return False
             
     def attack(self, data):
         user = User.objects.get(username = data['attacked_player'])
@@ -51,7 +60,8 @@ class ChatConsumer(WebsocketConsumer):
         warzone = Warzone.objects.get(player=player, room = int(data['room']))
         warzone.shooted+= data['zone_id']+'-'
         warzone.save()
-        self.next_turn()
+        if not self.check_hit(warzone, data['zone_id']):
+            self.next_turn()
         self.refresh(data)
 
     def playerSerialzers(self, player, room):

@@ -25,7 +25,7 @@ SECRET_KEY = 'j@=&uz3m-@k56%w@t3#ik4^+_tsi2)(er91a*nduxkcum#rjo='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['battleshipleo.herokuapp.com']
+ALLOWED_HOSTS = ['battleshipleo.herokuapp.com', 'localhost']
 
 
 # Application definition
@@ -80,7 +80,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [('0.0.0.0:6379'),('127.0.0.1', 6379)],
             # "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
         },
     },
