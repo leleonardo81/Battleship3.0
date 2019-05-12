@@ -1,7 +1,7 @@
 import os
-# import django
-from channels.asgi import get_channel_layer
+import django
+from channels.routing import get_default_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Battleship.settings")
-# django.setup()
-app = get_channel_layer()
+django.setup()
+app = get_default_application()
