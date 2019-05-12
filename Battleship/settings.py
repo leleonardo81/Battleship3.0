@@ -83,7 +83,6 @@ CHANNEL_LAYERS = {
             # "hosts": [('0.0.0.0:6379'),('127.0.0.1', 6379)],
             "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
         },
-        'ROUTING': 'Battleship.routing.application'
     },
 }
 
