@@ -1,7 +1,7 @@
 import os
 # import django
-import channels
+from channels.asgi import get_channel_layer
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Battleship.settings")
 # django.setup()
-app = channels.asgi.get_channel_layer()
+app = get_channel_layer()
