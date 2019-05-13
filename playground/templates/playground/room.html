@@ -41,9 +41,12 @@
     setShip(1);
     var gameStatus;
     var roomID = {{ room_id_json }};
-    var gameSocket = new WebSocket(
+    var gameSocket = ReconnectingWebSocket(
         'ws://' + window.location.host +
         '/ws/room/' + roomID + '/');
+    // var gameSocket = new WebSocket(
+    //     'ws://' + window.location.host +
+    //     '/ws/room/' + roomID + '/');
     
     gameSocket.onopen = function(e) {
         console.log('SocketOpen');
@@ -414,23 +417,5 @@
             alert('diisi dulu');
         }
     };
-    
-    /*document.querySelector('#chat-message-input').focus();
-    document.querySelector('#chat-message-input').onkeyup = function(e) {
-        if (e.keyCode === 13) {  // enter, return
-            document.querySelector('#chat-message-submit').click();
-        }
-    };
-
-    document.querySelector('#chat-message-submit').onclick = function(e) {
-        var messageInputDom = document.querySelector('#chat-message-input');
-        var message = messageInputDom.value;
-        gameSocket.send(JSON.stringify({
-            'command': 'new_message',
-            'message': message,
-        }));
-
-        messageInputDom.value = '';
-    };*/
 </script>
 </html>
