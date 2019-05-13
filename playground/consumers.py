@@ -99,7 +99,7 @@ class ChatConsumer(WebsocketConsumer):
 
     def refresh(self, data):
         room = int(self.room_group_name)
-        players = Player.objects.filter(room=room)#janlupa disort lah
+        players = Player.objects.filter(room=room)
         players_json = []
         players_mark = []
         now_room = Room.objects.get(id = room)
