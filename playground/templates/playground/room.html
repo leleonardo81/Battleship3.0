@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>BattleShip</title>
     <link rel="stylesheet" href="{% static 'room.css' %}">
-    <link href="https://fonts.googleapis.com/css?family=Exo+2:600" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Exo+2:600" rel="stylesheet">
 </head>
 <body>
     <div id="player-info">
@@ -30,6 +30,7 @@
     <input id="chat-message-input" type="text" size="100"/><br/>
     <input id="chat-message-submit" type="button" value="Send"/>-->
 </body>
+<script src="{% static 'reconnect.js' %}"></script>
 <script>
     var selectEnemy;
     var nowTurn;
@@ -41,7 +42,7 @@
     setShip(1);
     var gameStatus;
     var roomID = {{ room_id_json }};
-    var gameSocket = ReconnectingWebSocket(
+    var gameSocket = new ReconnectingWebSocket(
         'ws://' + window.location.host +
         '/ws/room/' + roomID + '/');
     // var gameSocket = new WebSocket(
