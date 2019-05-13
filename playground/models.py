@@ -33,10 +33,10 @@ class Room(models.Model):
 class Warzone(models.Model):
     player = models.ForeignKey(Player, default=None, on_delete=models.CASCADE ,related_name='player') 
     room = models.IntegerField()
-    ship1 = models.CharField(max_length=15, blank=True, null=True)
-    ship2 = models.CharField(max_length=12, blank=True, null=True)
-    ship3 = models.CharField(max_length=9, blank=True, null=True)
-    ship4 = models.CharField(max_length=6, blank=True, null=True)
+    ship1 = models.CharField(max_length=20, blank=True, null=True)
+    ship2 = models.CharField(max_length=17, blank=True, null=True)
+    ship3 = models.CharField(max_length=14, blank=True, null=True)
+    ship4 = models.CharField(max_length=11, blank=True, null=True)
     shooted = models.CharField(max_length=250, default="")
 
     def setShip(self, ship_data):
