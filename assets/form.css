@@ -9,7 +9,6 @@ body{
     background-size: cover;
     background-blend-mode: multiply;
     margin: 0px;
-    
 }
 
 .form-input p{
@@ -75,4 +74,25 @@ body{
 
 .form-input a:visited, .form-input a{
     color: white;
+}
+
+.form-input img{
+    width: 6vmin;
+    height: auto;
+}
+
+.mid-content{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.google{
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(199, 180, 11);
+}
+
+.no-decoration{
+    text-decoration: none;
 }

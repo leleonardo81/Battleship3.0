@@ -142,16 +142,16 @@ STATICFILES_DIRS = (
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
-    # 'django.contrib.auth.backends.ModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
-LOGIN_URL = '/auth/login/google-oauth2/?next=/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/auth/login/google-oauth2/?next=/login/google-login/'
+LOGIN_REDIRECT_URL = '/login/google-login/'
 LOGOUT_REDIRECT_URL = '/'
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '328068434199-volkun8vj4ugdoc9oc6v87lbaumue62t.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'tZTEopLWT3BUIjqIrQQVRvRc'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
-import django_heroku
-django_heroku.settings(locals())
+# import django_heroku
+# django_heroku.settings(locals())

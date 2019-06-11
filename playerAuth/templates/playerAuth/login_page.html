@@ -16,9 +16,16 @@
             <div class="form-input"><p>Username</p>{{ form.username }}</div>
             <div class="form-input"><p>Password</p>{{ form.password }}</div>
             <p class='form-input'><a href="{% url 'playerAuth:signup' %}">Don't have an Account? SignUp Here</a></p>
-            <p class="form-input"><a href="{% url 'social:begin' 'google-oauth2' %}" target="blank">Login google</a></p>
             <button type="submit" class="formbutton">Login</button>
         </form>
+        <div class="form-input mid-content">
+            <a class="no-decoration" href="{% url 'social:begin' 'google-oauth2' %}">
+                <div class="mid-content google" >
+                    <img src="{% static 'google.png' %}" />
+                    <p>Google Login</p>
+                </div>
+            </a>
+        </div>
     </div>
 </body>
 </html>

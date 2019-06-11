@@ -6,5 +6,6 @@ app_name = 'playerAuth'
 urlpatterns = [
     path('', views.Login, name='login'),
     path('signup/', views.Signup, name='signup'),
-    # path('google-login/', include('social_django.urls', namespace='social')),
+    path('google-login/', views.google_login, name='glogin'),
+    path('logout/', views.loggedout, name='logout')
 ]
