@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('playground.urls'), name='playground'),
     path('login/', include('playerAuth.urls'), name='playerAuth'), 
+    path('google-login/', include('social_django.urls', namespace='social')),
 ]

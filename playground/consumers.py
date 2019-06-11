@@ -76,11 +76,11 @@ class ChatConsumer(WebsocketConsumer):
             for m in p_warzone.shooted.split("-"):
                 if m in p_warzone.ship1.split('-'):
                     sh1_shooted.append(m)
-                elif m in p_warzone.ship2.split('-'):
+                if m in p_warzone.ship2.split('-'):
                     sh2_shooted.append(m)
-                elif m in p_warzone.ship3.split('-'):
+                if m in p_warzone.ship3.split('-'):
                     sh3_shooted.append(m)
-                elif m in p_warzone.ship4.split('-'):
+                if m in p_warzone.ship4.split('-'):
                     sh4_shooted.append(m)
             
         return {

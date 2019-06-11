@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'channels',
     'playerAuth',
     'playground',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -138,5 +139,17 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'assets'),
 )
-# import django_heroku
-# django_heroku.settings(locals())
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    # 'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_URL = '/auth/login/google-oauth2/'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '328068434199-volkun8vj4ugdoc9oc6v87lbaumue62t.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'tZTEopLWT3BUIjqIrQQVRvRc'
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+import django_heroku
+django_heroku.settings(locals())
